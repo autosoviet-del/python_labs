@@ -1,0 +1,192 @@
+Задание А:
+Теория:
+    json_to_csv
+        Читает JSON-файл, представляющий собой массив словарей.( [{"ключ": "значение"}, ...])
+                Формат: Термин "массив словарей" часто ассоциируется с форматом JSON, тогда как "список словарей" относится конкретно к Python.
+                Использование: JSON-массив обычно передается между системами (например, веб-сервисами), тогда как список словарей применяется в коде Python для обработки и 		манипулирования данными.
+            список(это упорядоченная изменяемая коллекция объектов)list('abcd') вывод ['a','b','c','d'] 
+            словарь dict(a=1,b=2,c=3) выводит {'a':1,'b':2,'c':3}                                     
+        Преобразует его в CSV-файл.
+	    CSV-файл (Comma-Separated Values) представляет собой простой текстовый файл, предназначенный для хранения табличных данных, разделенных символами-разделителями               	    (чаще всего запятыми).Первая строка файла обычно содержит заголовки столбцов (названия полей).Каждая последующая строка соответствует одной записи или строке   	     таблицы.
+             Имя,Возраст,Город
+             Иван,30,Москва
+             Анна,28,Санкт-Петербург
+             Сергей,45,Казань
+        Использует UTF-8-кодировку.
+            UTF-8 — это наиболее распространённая и удобная кодировка, идеально подходящая для международного взаимодействия и эффективной работы с текстом в любом языке.
+        Порядок колонок соответствует первому объекту или сортированному алфавиту (уточнить в документации).
+        Поля, отсутствующие в некоторых объектах, заполняются пустыми строками.
+    csv_to_json
+        Чтение CSV-файла с обязательным первым рядом-заголовком.
+        Преобразование в JSON-список словарей.
+        Значения хранятся как строки(str).
+        Используется сериализация с отступами и поддержкой UTF-8.
+            Пример:
+               Без отступов (minified JSON):
+
+		{"name":"Иван","age":30,"city":"Москва"}
+		С отступами (pretty printed JSON):
+
+		{
+		    "name": "Иван",
+		    "age": 30,
+		    "city": "Москва"
+		}
+
+БИБЛИОТЕКИ И МЕТОДЫ:
+    
+    Используются стандартные библиотеки:
+    pathlib (модуль стандартной библиотеки Python, предназначенный для удобной работы с путями к файлам и каталогам)Path: основной класс для работы с путями.
+              Базовые методы Path:
+                  .exists(): проверяет существование файла или каталога.
+                      Пример
+                      from pathlib import Path
+		              new_folder = Path("new_folder")
+		               if not new_folder.exists():
+    		          new_folder.mkdir()
+		          .is_file(), .is_dir(): определяют, является ли путь файлом или каталогом.
+		          .mkdir(): создает новую директорию.
+		          .glob(): ищет файлы по маске (аналог find или ls).
+		          .absolute(): возвращает абсолютный путь.
+		          .parent: родительская директория текущего пути.
+		          .joinpath(*other): добавляет компоненты к существующему пути.
+		          .with_name(new_name), .with_suffix(new_suffix): меняют имя или расширение файла.
+      
+    json — парсер JSON.
+        Методы библиотеки
+json.loads(s): парсит строку JSON и возвращает соответствующий Python-объект.
+(Парсинг (от английского parsing — разбор, структурирование) — автоматизированный сбор и структурирование данных из внешних источников.)
+    import json
+    json_str = '{"имя": "Иван", "возраст": 30}'
+    data = json.loads(json_str)
+    print(data["имя"])  # выведет: Иван
+json.dumps(obj): сериализирует Python-объект в строку формата JSON.
+(Сериализация в программировании — процесс перевода структуры данных в оперативной или постоянной памяти в последовательность битов, байтов, слов, символов или других кодовых единиц. )
+    import json
+    obj = {"имя": "Иван", "возраст": 30}
+    json_str = json.dumps(obj)
+    print(json_str)  # выведет: {"имя": "Иван", "возраст": 30}
+json.load(fp): считывает JSON-данные из файла и возвращает Python-объект.
+    import json
+    with open('data.json', 'r') as f:
+    data = json.load(f)
+    print(data)
+json.dump(obj, fp): сохраняет Python-объект в файл в формате JSON.
+    import json
+    data = {"имя": "Иван", "возраст": 30}
+    with open('output.json', 'w') as f:
+    json.dump(data, f)
+Дополнительные возможности
+Параметр indent=N: выводит JSON с отступами для удобства просмотра.
+Параметры sort_keys=True, ensure_ascii=False: сортировка ключей и вывод национальных символов без экранирования.
+Пример с отступами и поддержкой русских символов:
+    import json
+    data = {"имя": "Иван", "город": "Москва"}
+    json_str = json.dumps(data, ensure_ascii=False, indent=4)
+    print(json_str)
+    Выход:
+    {
+        "имя": "Иван",
+        "город": "Москва"
+    }
+
+    csv — работа с CSV-файлами.
+        Чтение CSV-файлов (reader, DictReader).
+        Запись данных в CSV-файлы (writer, DictWriter).
+        Автоматический подбор разделителя и цитирования значений.
+        Возможность задания собственных разделителей и цитаторов.
+        Класс Reader:
+            Позволяет прочитать данные из CSV-файла построчно.
+            import csv
+            with open('example.csv', newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+            print(', '.join(row))
+        Класс DictReader:
+            Читает данные в виде словаря, используя первую строку файла как ключи.
+            import csv
+            with open('names.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+            print(row['First Name'], row['Last Name'])
+        Запись данных:
+        Класс Writer позволяет записать таблицу данных в CSV-файл.
+            import csv
+            data = [['Name', 'Age'], ['Alice', '25'], ['Bob', '30']]
+            with open('output.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(data)
+        Class DictWriter:
+        Позволяет писать данные в формате словаря.
+            import csv
+            fieldnames = ['First Name', 'Last Name']
+            rows = [
+                {'First Name': 'John', 'Last Name': 'Doe'},
+                {'First Name': 'Jane', 'Last Name': 'Smith'}
+            ]
+            with open('people.csv', mode='w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+        Настройка разделителей и цитирований:
+        Можно задать собственные разделители и правила цитирования данных.
+            import csv
+            with open('semicolon.csv', newline='') as csvfile:
+                reader = csv.reader(csvfile, delimiter=';', quotechar='"')
+                for row in reader:
+                    print(row)
+
+ТРЕБОВАНИЯ К ОШИБКАМ
+        Необходимо обрабатывать ситуации:
+            Отсутствие файла: выбрасывается исключение FileNotFoundError.
+                Способ 1:
+                from pathlib import Path
+                # Путь к интересующему файлу
+                file_path = Path('/home/user/myfile.txt')
+                # Проверка, является ли это файлом
+                if not file_path.is_file():
+                   raise FileNotFoundError(f"Файл {json_path} не найден.")
+                Способ 2:
+                filename = input("Введите имя файла: ")
+                try:
+                    with open(filename, 'r') as file:
+                        content = file.read()
+                        print(content)
+                except FileNotFoundError:
+                    print(f"Ошибка: файл '{filename}' не найден.")
+
+            Неверный формат файла (JSON/CVS): выброс исключения ValueError.
+                Некорректный JSON:
+                Недостающие или лишние запятые.
+                Несоответствие квадратных или фигурных скобок.
+                Неправильно сформированные строки (например, отсутствие кавычек).
+                Проблемы с CSV:
+                Количество столбцов отличается от ожидаемого.
+                Нарушение разделения значений (например, неправильный разделитель).
+                Пробелы или пустые строки, нарушающие структуру.
+            Способ 1(Функция isinstance() в Python используется для проверки принадлежности объекта указанному классу или типу данных isinstance(object, class_or_tuple_of_classes)):
+                json:
+                    if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
+                        raise ValueError("Ошибка формата")
+                csv:
+                        if not csv_data:#проверка пусто или none
+                           raise ValueError("Файл пуст или плохо сформирован.")
+                Это из кода как мы делали=)
+            Способ 2 :
+                 import json
+                 try:
+                     with open('invalid_data.json', 'r') as file:
+                         data = json.load(file)
+                 except ValueError as ve:
+                     print(f"Ошибка формата JSON: {ve}")
+
+                 import csv
+                 try:
+                     with open('broken.csv', 'r') as file:
+                        reader = csv.reader(file)
+                        for row in reader:
+                        print(row)
+                 except ValueError as ve:
+                     print(f"Ошибка формата CSV: {ve}")
+
+
