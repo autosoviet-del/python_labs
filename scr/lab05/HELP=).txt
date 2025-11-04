@@ -189,4 +189,114 @@ json.dump(obj, fp): сохраняет Python-объект в файл в фор
                  except ValueError as ve:
                      print(f"Ошибка формата CSV: {ve}")
 
+Задание Б:
+   Все тоже + openpyxl
+   Библиотека openpyxl
+Библиотека openpyxl позволяет читать, писать и изменять электронные таблицы формата Excel (XLSX). Вот основные методы и концепции, которыми стоит владеть при работе с этой библиотекой.
 
+1. Основы работы с библиотекой
+Workbook: Книга Excel, состоящая из листов (листов данных).
+Worksheet: Лист в книге Excel.
+Cell: Ячейка, в которой хранятся данные.
+2. Самые важные методы и свойства
+Создание и открытие рабочей книги (Workbook)
+Workbook(): Создаёт новую рабочую книгу.
+load_workbook(): Открывает существующий файл Excel.
+Пример:
+
+
+from openpyxl import Workbook, load_workbook
+
+# Создать новую книгу
+wb = Workbook()
+
+# Открыть существующую книгу
+existing_wb = load_workbook('example.xlsx')
+Работа с листами (Worksheet)
+create_sheet(): Создаёт новый лист в книге.
+active: Возвращает активный лист.
+sheetnames: Возвращает список названий листов в книге.
+title: Название листа.
+Пример:
+
+
+# Получить активный лист
+ws = wb.active
+
+# Создать новый лист
+new_ws = wb.create_sheet(title="My Sheet")
+
+# Изменить название активного листа
+ws.title = "First Sheet"
+Работа с ячейками (Cells)
+cell(): Возвращает ячейку по координатам.
+value: Свойство, позволяющее читать или записывать значение ячейки.
+row и column: Координаты ячейки.
+Пример:
+
+
+# Записать значение в ячейку
+ws['A1'] = "Hello"
+
+# Получить значение ячейки
+value = ws['A1'].value
+
+# Другой способ доступа к ячейке
+cell = ws.cell(row=1, column=1)
+cell.value = "World"
+Массивная работа с ячейками
+iter_rows(): Генератор для обхода строк.
+iter_cols(): Генератор для обхода столбцов.
+Пример:
+
+
+# Обойти все строки листа
+for row in ws.iter_rows(values_only=True):
+    print(row)
+
+# Обойти все столбцы
+for col in ws.iter_cols(values_only=True):
+    print(col)
+Форматирование ячеек
+font: Изменяет шрифт.
+alignment: Управление выравниванием.
+border: Границы ячейки.
+fill: Заливка цветом.
+Пример:
+
+
+from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
+
+# Применить жирный шрифт
+bold_font = Font(bold=True)
+ws['A1'].font = bold_font
+
+# Центровка текста
+center_alignment = Alignment(horizontal='center')
+ws['A1'].alignment = center_alignment
+
+# Красная заливка
+red_fill = PatternFill(fill_type='solid', fgColor="FF0000")
+ws['A1'].fill = red_fill
+Автоподбор ширины столбцов
+Можно автоматически подобрать ширину столбцов под самый широкий текст:
+
+
+for column_cells in ws.columns:
+    max_length = 0
+    for cell in column_cells:
+        try:
+            if len(str(cell.value)) > max_length:
+                max_length = len(cell.value)
+        except TypeError:
+            pass
+    adjusted_width = (max_length + 2)
+    ws.column_dimensions[column_cells[0].column_letter].width = adjusted_width
+Сохранение книги
+save(): Сохраняет книгу в файл.
+Пример:
+
+
+wb.save('output.xlsx')
+Заключение
+Библиотека openpyxl — крайне полезная вещь для работы с Excel-файлами в Python. Описанные выше методы покрывают большинство базовых потребностей, позволяя комфортно создавать, читать и изменять таблицы Excel, а также форматировать их внешний вид.

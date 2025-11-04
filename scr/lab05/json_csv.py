@@ -4,12 +4,17 @@ import csv
 
 def json_to_csv(json_path:str, csv_path:str) -> None:
     json_file = Path(json_path)  # объект  файл с путем json_path
-    if not json_file.is_file():  # проверка существования файла
-        raise FileNotFoundError(f"Файл {json_path} не найден.")
-    with json_file.open('r', encoding='utf-8') as j:
-        data = json.load(j)
-    if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
-        raise ValueError("Ошибка формата")
+    #if not json_file.is_file():  # проверка существования файла
+     #   raise FileNotFoundError(f"Файл {json_path} не найден.")
+    try:
+        with json_file.open('r', encoding='utf-8') as j:
+            data = json.load(j)
+    #if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
+     #   raise ValueError("Ошибка формата")
+    except FileNotFoundError:
+        print(f"Файл {json_path} не найден.")
+    except ValueError:
+        print("Ошибка формата")
     keys = set()
     for el in data:#проходим по всем элементам data
         keys.update(el.keys())#записываем все ключи в  keys
