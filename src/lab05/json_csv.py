@@ -5,12 +5,12 @@ import csv
 def json_to_csv(json_path:str, csv_path:str) -> None:
     json_file = Path(json_path)  # объект  файл с путем json_path
     #if not json_file.is_file():  # проверка существования файла
-     #   raise FileNotFoundError(f"Файл {json_path} не найден.")
+    #   raise FileNotFoundError(f"Файл {json_path} не найден.")
     try:
         with json_file.open('r', encoding='utf-8') as j:
             data = json.load(j)
     #if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
-     #   raise ValueError("Ошибка формата")
+    #   raise ValueError("Ошибка формата")
     except FileNotFoundError:
         print(f"Файл {json_path} не найден.")
     except ValueError:
@@ -40,8 +40,7 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
         json.dump(csv_data, j, ensure_ascii=False, indent=4)
 
 #Тесты
-js='scr/data/out/people1.json'
-cs='scr/data/samples/people.csv'
+js='data/out/people1.json'
+cs='data/samples/people.csv'
 csv_to_json(cs, js)
-json_to_csv('scr/data/samples/people.json', 'scr/data/out/people1.csv')
-
+json_to_csv('data/samples/people.json', 'data/out/people1.csv')
