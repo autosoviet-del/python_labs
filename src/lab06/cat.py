@@ -1,5 +1,5 @@
 from pathlib import Path
-import sys  # ← уже импортирован
+import sys 
 
 csv_file = Path('data/samples/people.csv')
 

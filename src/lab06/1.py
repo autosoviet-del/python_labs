@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 # Путь к файлу
-csv_file = Path('data/samples/peoplve.csv')
+csv_file = Path('data/samples/people.csv')
 
 try:
     with open(csv_file, mode='r', encoding='utf-8') as f:
