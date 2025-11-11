@@ -44,7 +44,7 @@ def main():
                 for line_num, line in enumerate(f, start=1):
                     line = line.rstrip('\n\r')
                     if args.n:
-                        print(f"{line_num:3}  {line}")
+                        print(f"{line_num}  {line}")
                     else:
                         print(line)
 

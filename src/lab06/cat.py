@@ -1,3 +1,6 @@
+
+# python -m src.lab06.cli_text cat -i data/samples/cities.csv
+
 from pathlib import Path
 import sys 
 
@@ -7,7 +10,8 @@ try:
     with open(csv_file, mode='r', encoding='utf-8') as f:
         for line_num, line in enumerate(f, start=1):
             line = line.rstrip('\n\r')
-            print(line)
+            print(f"{line_num} | {line}")
+
 
 except FileNotFoundError:
     print(f"❌ Файл не найден: {csv_file.resolve()}", file=sys.stderr)
