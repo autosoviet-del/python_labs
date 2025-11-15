@@ -7,7 +7,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     with csv_file.open('r', encoding='utf-8') as c: # открываем файл с формате чтения, кодировка utf-8
         reader = csv.reader(c)
         rows = list(reader)
-        print(rows)
+      #  print(rows)
     if not rows or not rows[0]:
         raise ValueError("Пустой CSV или неправильный формат.")
     wb = Workbook()
@@ -25,4 +25,4 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     wb.save('data/out/xlsx_path.xlsx')
 
 # Тест
-csv_to_xlsx('data/samples/cities.csv', xlsx_path='data/out/xlsx_path.xlsx')
+#csv_to_xlsx('data/samples/cities.csv', xlsx_path='data/out/xlsx_path.xlsx')
