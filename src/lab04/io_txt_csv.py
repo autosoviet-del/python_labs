@@ -21,11 +21,14 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
         raise FileNotFoundError(f"Файл '{path}' не найден.")
     except UnicodeDecodeError:
         # Генерируем исключение, если возникли проблемы с кодировкой
-        raise UnicodeDecodeError(f"Ошибка декодирования файла '{path}'. Проверьте кодировку.")
+        raise UnicodeDecodeError(
+            f"Ошибка декодирования файла '{path}'. Проверьте кодировку."
+        )
 
 
-
-def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+def write_csv(
+    rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None
+) -> None:
     """
     Записывает данные в CSV-файл с разделителем ',', проверяя, что строки имеют одинаковую длину.
 
@@ -51,9 +54,6 @@ def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...
         writer.writerows(rows)
 
 
-
-
-
 txt = read_text("text.txt")  # должен вернуть строку
 txtkor = tuple(tuple(line.split()) for line in txt.splitlines())
-write_csv( txtkor, "check.csv")  # создаст CSV
+write_csv(txtkor, "check.csv")  # создаст CSV

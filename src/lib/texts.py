@@ -3,26 +3,45 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True):
     if casefold:
         s = s.casefold()
     if yo2e:
-        s = s.replace('ё', 'е')
-    s = s.replace('\t', ' ').replace('\r', ' ').replace('\n', ' ')
-    s = ' '.join(s.split())
+        s = s.replace("ё", "е")
+    s = s.replace("\t", " ").replace("\r", " ").replace("\n", " ")
+    s = " ".join(s.split())
     return s
 
 
 def tokenize(text):
     tokens = []
-    word = ''
-    for ch in text:
-        if ch.isalnum() or ch == '_':
+    word = ""
+
+    for i, ch in enumerate(text):
+        # Проверяем, является ли символ допустимым в слове
+        if ch.isalnum() or ch == "_":
             word += ch
-        elif ch == '-' and word:
-            word += '-'
+
+        elif ch == "-":
+            # Проверяем, является ли дефис частью составного слова
+            prev_is_alnum = i > 0 and text[i - 1].isalnum()
+            next_is_alnum = i < len(text) - 1 and text[i + 1].isalnum()
+
+            if prev_is_alnum and next_is_alnum:
+                # Дефис между буквами/цифрами → часть слова
+                word += ch
+            else:
+                # Дефис как разделитель → завершаем текущее слово
+                if word:
+                    tokens.append(word)
+                    word = ""
+
         else:
+            # Любой другой символ (пробел, запятая и т.д.)
             if word:
                 tokens.append(word)
-                word = ''
+                word = ""
+
+    # Добавляем последнее слово
     if word:
         tokens.append(word)
+
     return tokens
 
 

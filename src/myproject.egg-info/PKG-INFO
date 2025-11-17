@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: myproject
+Version: 0.1.0
+Summary: Мой проект с текстами и конвертацией
+Requires-Python: >=3.8
