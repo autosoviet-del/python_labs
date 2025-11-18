@@ -5,7 +5,6 @@ src/Lab07.egg-info/SOURCES.txt
 src/Lab07.egg-info/dependency_links.txt
 src/Lab07.egg-info/requires.txt
 src/Lab07.egg-info/top_level.txt
-src/lab03/__init__.py
 src/lab03/text.py
 src/lab03/text_stats.py
 src/lab04/io_txt_csv.py
@@ -13,7 +12,6 @@ src/lab04/text_report.py
 src/lab05/__init__.py
 src/lab05/csv_xlsx.py
 src/lab05/json_csv.py
-src/lab06/__init__.py
 src/lab06/cat.py
 src/lab06/cli_convert.py
 src/lab06/cli_text.py
