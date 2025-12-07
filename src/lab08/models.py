@@ -31,6 +31,7 @@ class Student:
             # Если gpa < 0 или gpa > 5 — ошибка
             raise ValueError("gpa должен быть от 0 до 5 включительно")
 
+    
     def age(self) -> int:
         # Метод для вычисления возраста студента в годах
 
