@@ -19,15 +19,15 @@ class Group:
                     fio=row["fio"],
                     birthdate=row["birthdate"],
                     group=row["group"],
-                    gpa=float(row["gpa"])
+                    gpa=float(row["gpa"]),
                 )
 
     def _rewrite(self, students):
         with self.path.open("w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["fio", "birthdate", "group", "gpa"])
-            for s in students:
-                writer.writerow([s.fio, s.birthdate, s.group, s.gpa])
+            for student in students:
+                writer.writerow([student.fio, student.birthdate, student.group, student.gpa])
 
     def list(self):
         return list(self._read_all())
@@ -38,11 +38,12 @@ class Group:
             writer = csv.writer(f)
             if file_empty:
                 writer.writerow(["fio", "birthdate", "group", "gpa"])
-            writer.writerow([student.fio, student.birthdate,
-                            student.group, student.gpa])
+            writer.writerow([student.fio, student.birthdate, student.group, student.gpa])
 
     def find(self, substr: str):
-        return [s for s in self.list() if substr.lower() in s.fio.lower()]
+        return [
+            student for student in self.list() if substr.lower() in student.fio.lower()
+        ]
 
     def remove(self, fio: str):
         students = self.list()
@@ -71,7 +72,6 @@ class Group:
 
     def stats(self) -> dict:
         students = self.list()
-
         if not students:
             return {
                 "count": 0,
@@ -79,24 +79,22 @@ class Group:
                 "max_gpa": None,
                 "avg_gpa": None,
                 "groups": {},
-                "top_5_students": []
+                "top_5_students": [],
             }
 
         count = len(students)
-
-        gpas = [s.gpa for s in students]
-
+        gpas = [student.gpa for student in students]
         min_gpa = min(gpas)
         max_gpa = max(gpas)
         avg_gpa = round(sum(gpas) / len(gpas), 2)
 
         groups = {}
-        for s in students:
-            groups[s.group] = groups.get(s.group, 0) + 1
+        for student in students:
+            groups[student.group] = groups.get(student.group, 0) + 1
 
         top_5_students = [
-            {"fio": s.fio, "gpa": s.gpa}
-            for s in sorted(students, key=lambda x: x.gpa, reverse=True)[:5]
+            {"fio": student.fio, "gpa": student.gpa}
+            for student in sorted(students, key=lambda student: student.gpa, reverse=True)[:5]
         ]
 
         return {
@@ -105,5 +103,5 @@ class Group:
             "max_gpa": max_gpa,
             "avg_gpa": avg_gpa,
             "groups": groups,
-            "top_5_students": top_5_students
+            "top_5_students": top_5_students,
         }
