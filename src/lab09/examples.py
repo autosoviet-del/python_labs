@@ -22,7 +22,7 @@ print("-" * 60)
 print("🔍 Поиск студентов с 'анна':")
 found = group.find("анна")
 for s in found:
-    print(f"  {s.fio} — {s.gpa}")
+    print(f"  {s.fio} —` {s.gpa}")
 print("-" * 60)
 
 
