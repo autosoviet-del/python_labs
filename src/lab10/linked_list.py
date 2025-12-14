@@ -1,16 +1,19 @@
+from typing import Any, Optional, Iterator
+
+
 class Node:
-    def __init__(self, value, next=None):
+    def __init__(self, value: Any, next: Optional['Node'] = None):
         self.value = value
         self.next = next
 
 
 class SinglyLinkedList:
     def __init__(self):
-        self._head = None
-        self._tail = None
-        self._size = 0
+        self._head: Optional[Node] = None
+        self._tail: Optional[Node] = None
+        self._size: int = 0
 
-    def append(self, value):
+    def append(self, value: Any) -> None:
         new_node = Node(value)
         if self._head is None:
             self._head = new_node
@@ -21,7 +24,7 @@ class SinglyLinkedList:
             self._tail = new_node
             self._size += 1
 
-    def prepend(self, value):
+    def prepend(self, value: Any) -> None:
         new_node = Node(value, next=self._head)
         self._head = new_node
         self._size += 1  
@@ -29,7 +32,7 @@ class SinglyLinkedList:
         if self._size == 1:
             self._tail = new_node
 
-    def insert(self, idx, value):
+    def insert(self, idx: int, value: Any) -> None:
         if idx < 0 or idx > self._size:
             raise IndexError(f"Index {idx} out of range")
 
@@ -53,23 +56,23 @@ class SinglyLinkedList:
         current.next = new_node
         self._size += 1  
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         current = self._head
         while current is not None:
             yield current.value
             current = current.next
         
-    def __len__(self):
+    def __len__(self) -> int:
         return self._size  
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         values = list(self)
         return f"SinglyLinkedList({values})"
     
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self._size == 0
     
-    def get(self, idx):
+    def get(self, idx: int) -> Any:
         if idx < 0 or idx >= self._size:
             raise IndexError(f"Index {idx} out of range")
         
@@ -78,7 +81,7 @@ class SinglyLinkedList:
             current = current.next
         return current.value
 
-    def visualize(self):
+    def visualize(self) -> str:
         if self._head is None:
             return "None"
         
