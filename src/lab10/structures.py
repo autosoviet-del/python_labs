@@ -63,7 +63,7 @@ if __name__ == "__main__":
     print(f"   Размер стека: {len(stack)}")
     print(f"   Верхний элемент (peek): {stack.peek()}")
     
-    print("\n2. Извлекаем элементы (LIFO):")
+    print("\n2. Извлекаем элементы :")
     while not stack.is_empty():
         item = stack.pop()
         print(f"   Извлечён: {item}, осталось: {len(stack)}")
@@ -105,6 +105,6 @@ if __name__ == "__main__":
         print(f"   ✅ Поймали ошибку: {e}")
     
     print("\n" + "="*50)
-    print("=== Практические примеры ===")
+ 
     
     
